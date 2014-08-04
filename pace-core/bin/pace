@@ -1,0 +1,13 @@
+#! /usr/bin/ruby
+
+require_relative '../lib/pace'
+
+case ARGV.first
+when 'console'
+  Pace::Console.start(ARGV[1])
+when 'install'
+  load File.expand_path(__dir__, 'install.rb')
+else
+  puts 'usage: pace install config/database.yml;pace console config/database.yml'
+end
+
