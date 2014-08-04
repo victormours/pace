@@ -6,7 +6,8 @@ case ARGV.first
 when 'console'
   Pace::Console.start(ARGV[1])
 when 'create-tables'
-  Pace::Config::Database.create_tables(ARGV[1])
+  database_config_hash = YAML.load_file(ARGV[1])
+  Pace::Config::Database.create_tables(database_config_hash)
 else
   puts 'usage: pace create-tables config/database.yml;pace console config/database.yml'
 end

@@ -1,5 +1,7 @@
 #! /usr/bin/ruby
 
 require_relative '../lib/pace'
-Pace::Config::Database.create_tables(ARGV[0])
+database_config_hash = YAML.load_file(ARGV[0])
+
+Pace::Config::Database.create_tables(database_config_hash)
 
