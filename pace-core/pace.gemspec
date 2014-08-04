@@ -7,7 +7,7 @@ Gem::Specification.new do |gem|
   gem.authors     = ["Victor Mours"]
   gem.email       = 'victor.mours@gmail.com'
   gem.files       = Dir["lib/**/*.rb"]
-  gem.executables = ['console']
+  gem.executables = ['pace', 'pace-console', 'pace-create-tables']
 
   gem.add_runtime_dependency "activerecord"
   gem.add_runtime_dependency "pg"
