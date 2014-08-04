@@ -1,0 +1,8 @@
+#! /usr/bin/ruby
+
+require 'pry'
+
+#require_relative '../lib/pace'
+#Pace::Config.load($1)
+
+Pry.start
