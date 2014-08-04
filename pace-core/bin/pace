@@ -5,9 +5,9 @@ require_relative '../lib/pace'
 case ARGV.first
 when 'console'
   Pace::Console.start(ARGV[1])
-when 'install'
-  load File.expand_path(__dir__, 'install.rb')
+when 'create-tables'
+  Pace::Config::Database.create_tables(ARGV[1])
 else
-  puts 'usage: pace install config/database.yml;pace console config/database.yml'
+  puts 'usage: pace create-tables config/database.yml;pace console config/database.yml'
 end
 

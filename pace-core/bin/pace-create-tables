@@ -1,4 +1,5 @@
 #! /usr/bin/ruby
 
 require_relative '../lib/pace'
-Pace::Console.start(ARGV[0])
+Pace::Config::Database.create_tables(ARGV[0])
+
