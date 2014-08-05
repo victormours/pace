@@ -15,20 +15,32 @@ func templateNames() ([]string) {
   templateFiles, _ := ioutil.ReadDir("templates")
   names := make([]string, 0)
   for _, templateFile := range templateFiles {
-    names = append(names, templateFile.Name()[0:len(".html")])
+    name := templateFile.Name()
+    names = append(names, name[:len(name) - len(".html")])
   }
   return names
+}
+
+func apiRequest(originalRequest *http.Request) (string) {
+  apiURL := "http://localhost:9292"
+  if originalRequest.Method == "GET" {
+    apiResponse, _ := http.Get(apiURL + originalRequest.URL.Path)
+    responseBytes, _ := ioutil.ReadAll(apiResponse.Body)
+    return string(responseBytes)
+  }
+  return ""
 }
 
 func templateHandler(writer http.ResponseWriter, request *http.Request) {
   template := loadTemplate(request.URL.Path[1:])
 	fmt.Fprintf(writer, string(template))
+	fmt.Fprintf(writer, apiRequest(request))
 }
 
 func main() {
   for _, templateName := range templateNames() {
     http.HandleFunc("/" + templateName, templateHandler)
   }
-  fmt.Printf("Starting server on port 8080")
+  fmt.Printf("Starting server on port 8080\n")
 	http.ListenAndServe(":8080", nil)
 }
