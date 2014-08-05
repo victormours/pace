@@ -1,15 +1,17 @@
 module Pace
   class Signup
-    def self.execute(email)
-      new(email).execute
+    def self.execute(email, password)
+      new(email, password).execute
     end
 
-    def initialize(email)
+    def initialize(email, password)
       @email = email
+      @password = password
     end
 
     def execute
-      User.create(email: @email)
+      User.create(email: @email,
+                  password: @password)
     end
   end
 end

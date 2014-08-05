@@ -11,6 +11,7 @@ Gem::Specification.new do |gem|
 
   gem.add_runtime_dependency "activerecord"
   gem.add_runtime_dependency "pg"
+  gem.add_runtime_dependency "bcrypt"
   gem.add_runtime_dependency "pry"
 
   gem.add_development_dependency "rspec"
