@@ -24,17 +24,16 @@ func templateNames() ([]string) {
 
 func apiRequest(originalRequest *http.Request) ([]byte) {
   apiURL := "http://localhost:9292"
+  var apiResponse http.Response
   if originalRequest.Method == "GET" {
-    apiResponse, _ := http.Get(apiURL + originalRequest.URL.Path)
-    responseBytes, _ := ioutil.ReadAll(apiResponse.Body)
-    return responseBytes
+    apiResponse, _ = http.Get(apiURL + originalRequest.URL.Path)
   }
-  return nil
+  responseBytes, _ := ioutil.ReadAll(apiResponse.Body)
+  return responseBytes
 }
 
 func jsonResponse(originalRequest *http.Request) (interface{}) {
   jsonBytes := apiRequest(originalRequest)
-  fmt.Printf(string(jsonBytes))
   var jsonMap interface{}
   json.Unmarshal(jsonBytes, &jsonMap)
   return jsonMap
@@ -47,9 +46,17 @@ func templateHandler(writer http.ResponseWriter, request *http.Request) {
 	fmt.Fprintf(writer, page)
 }
 
+func staticFileHandler(writer http.ResponseWriter, request *http.Request) {
+  fileName = "public" + requestURL + ".html"
+	fmt.Fprintf(writer, page)
+}
+
 func main() {
   for _, templateName := range templateNames() {
     http.HandleFunc("/" + templateName, templateHandler)
+  }
+  for _, fileName := range staticFileNames() {
+    http.HandleFunc("/" + fileName, staticFileHandler)
   }
   fmt.Printf("Starting server on port 8080\n")
 	http.ListenAndServe(":8080", nil)

@@ -1,5 +1,12 @@
-Hello Templates!
+<h1>Sent Messages</h1>
 {{#messages}}
-  A message
-  {{body}}
+  Message: {{body}}<br/>
+  Sent to: {{recipient_id}}<br/>
+  Sent on: {{created_at}}<br/>
+  <br/>
 {{/messages}}
+{{^messages}}
+  No messages sent<br/>
+{{/messages}}
+
+<a href="inbox">Inbox</a>

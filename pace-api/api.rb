@@ -15,7 +15,8 @@ module Pace
       optional :page
     end
     get :inbox do
-      Pace::ReceivedMessages.get(Authenticator.current_user_id, page: params[:page] || 0)
+      messages = Pace::ReceivedMessages.get(Authenticator.current_user_id, page: params[:page] || 0)
+      { messages: messages }
     end
 
     desc 'The list of messages sent by the user'
