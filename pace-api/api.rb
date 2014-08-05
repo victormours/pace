@@ -24,7 +24,8 @@ module Pace
       optional :page
     end
     get :outbox do
-      Pace::SentMessages.get(Authenticator.current_user_id, page: params[:page] || 0)
+      messages = Pace::SentMessages.get(Authenticator.current_user_id, page: params[:page] || 0)
+      { messages: messages }
     end
 
     desc 'Send a message to a user'

@@ -4,11 +4,12 @@ import (
 	"fmt"
 	"net/http"
 	"io/ioutil"
+  "github.com/hoisie/mustache"
+  "encoding/json"
 )
 
-func loadTemplate(filename string) (string) {
-	template, _ := ioutil.ReadFile("templates/" + filename + ".html")
-	return string(template)
+func templateFilename(requestURL string) (string) {
+	return "templates" + requestURL + ".html"
 }
 
 func templateNames() ([]string) {
@@ -21,20 +22,29 @@ func templateNames() ([]string) {
   return names
 }
 
-func apiRequest(originalRequest *http.Request) (string) {
+func apiRequest(originalRequest *http.Request) ([]byte) {
   apiURL := "http://localhost:9292"
   if originalRequest.Method == "GET" {
     apiResponse, _ := http.Get(apiURL + originalRequest.URL.Path)
     responseBytes, _ := ioutil.ReadAll(apiResponse.Body)
-    return string(responseBytes)
+    return responseBytes
   }
-  return ""
+  return nil
+}
+
+func jsonResponse(originalRequest *http.Request) (interface{}) {
+  jsonBytes := apiRequest(originalRequest)
+  fmt.Printf(string(jsonBytes))
+  var jsonMap interface{}
+  json.Unmarshal(jsonBytes, &jsonMap)
+  return jsonMap
 }
 
 func templateHandler(writer http.ResponseWriter, request *http.Request) {
-  template := loadTemplate(request.URL.Path[1:])
-	fmt.Fprintf(writer, string(template))
-	fmt.Fprintf(writer, apiRequest(request))
+  template := templateFilename(request.URL.Path)
+  jsonData := jsonResponse(request)
+  page := mustache.RenderFile(template, jsonData)
+	fmt.Fprintf(writer, page)
 }
 
 func main() {
