@@ -10,8 +10,7 @@ module Pace
     end
 
     def execute
-      User.create(email: @email,
-                  password: @password)
+      User.create(email: @email)
     end
   end
 end

@@ -1,6 +1,8 @@
 require 'grape'
 require 'pace'
 
+require_relative 'authenticator'
+
 Pace::Config::Database.connect(YAML.load_file('database.yml'))
 
 module Pace
@@ -13,7 +15,7 @@ module Pace
       optional :page
     end
     get :inbox do
-      Pace::ReceivedMessages.get(1, page: params[:page] || 0)
+      Pace::ReceivedMessages.get(Authenticator.current_user_id, page: params[:page] || 0)
     end
 
     desc 'The list of messages sent by the user'
@@ -22,7 +24,7 @@ module Pace
       optional :page
     end
     get :outbox do
-      Pace::SentMessages.get(1, page: params[:page] || 0)
+      Pace::SentMessages.get(Authenticator.current_user_id, page: params[:page] || 0)
     end
 
     desc 'Send a message to a user'
@@ -32,7 +34,7 @@ module Pace
     post :message do
       Pace::SendMessage.execute(
         body: params[:body],
-        sender_id: 1,
+        sender_id: Authenticator.current_user_id,
         recipient_id: 2
       )
     end

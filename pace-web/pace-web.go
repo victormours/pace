@@ -7,28 +7,28 @@ import (
 )
 
 func loadTemplate(filename string) (string) {
-	template, _ := ioutil.ReadFile(filename)
+	template, _ := ioutil.ReadFile("templates/" + filename + ".html")
 	return string(template)
 }
-
 
 func templateNames() ([]string) {
   templateFiles, _ := ioutil.ReadDir("templates")
   names := make([]string, 0)
-  for i := range templateFiles {
-    names = append(names, templateFiles[i].Name())
+  for _, templateFile := range templateFiles {
+    names = append(names, templateFile.Name()[0:len(".html")])
   }
   return names
 }
 
-func handler(writer http.ResponseWriter, request *http.Request) {
+func templateHandler(writer http.ResponseWriter, request *http.Request) {
   template := loadTemplate(request.URL.Path[1:])
 	fmt.Fprintf(writer, string(template))
 }
 
 func main() {
-  availableTemplates := templateNames()
-  fmt.Printf("%s", availableTemplates)
-	http.HandleFunc("/", handler)
+  for _, templateName := range templateNames() {
+    http.HandleFunc("/" + templateName, templateHandler)
+  }
+  fmt.Printf("Starting server on port 8080")
 	http.ListenAndServe(":8080", nil)
 }
