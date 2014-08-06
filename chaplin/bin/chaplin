@@ -3,4 +3,14 @@
 require_relative '../lib/chaplin'
 
 require "rack"
-Rack::Server.start(app: Chaplin::Server.new, Port: 8081)
+chaplin_server = Chaplin::Server.new
+static_urls = Dir.new('public').map do |entry|
+  '/' + entry
+end
+puts static_urls
+
+static_middleware = Rack::Static.new(chaplin_server,
+                                     urls: static_urls,
+                                     index: 'index.html',
+                                     root: 'public')
+Rack::Server.start(app: static_middleware, Port: 8081)
