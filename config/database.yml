@@ -1,7 +1,0 @@
-adapter: postgresql
-encoding: unicode
-database: pace_development
-pool: 5
-username: pace
-password:
-
