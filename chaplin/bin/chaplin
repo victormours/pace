@@ -3,11 +3,11 @@
 require_relative '../lib/chaplin'
 
 require "rack"
-chaplin_server = Chaplin::Server.new
+chaplin_server = Chaplin::Server.new('localhost:8080')
+
 static_urls = Dir.new('public').map do |entry|
   '/' + entry
 end
-puts static_urls
 
 static_middleware = Rack::Static.new(chaplin_server,
                                      urls: static_urls,
