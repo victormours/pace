@@ -1,0 +1,12 @@
+<h1>Inbox</h1>
+{{#messages}}
+  Message: {{body}}<br/>
+  Sent by: {{sender_id}}<br/>
+  Sent on: {{created_at}}<br/>
+  <br/>
+{{/messages}}
+{{^messages}}
+  No messages received<br/>
+{{/messages}}
+
+<a href="outbox">Sent messages</a>

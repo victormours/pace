@@ -1,0 +1,10 @@
+{
+  "apiURL": "http://localhost:9292",
+  "routes": [
+    {"GET": {"inbox": "inbox.html.mustache"}},
+    {"GET": {"outbox": "outbox.html.mustache"}},
+    {"GET": {"message/(0-9+)": "message.html.mustache"}},
+    {"POST": {"signup": "signup.html.mustache"}},
+    {"POST": {"send": "send.html.mustache"}}
+  ]
+}

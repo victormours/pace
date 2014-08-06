@@ -8,9 +8,9 @@ import (
   "encoding/json"
 )
 
-func templateFilename(requestURL string) (string) {
-	return "templates" + requestURL + ".html"
-}
+//func templateFilename(requestURL string) (string) {
+//	return "templates" + requestURL + ".html"
+//}
 
 func templateNames() ([]string) {
   templateFiles, _ := ioutil.ReadDir("templates")
@@ -19,12 +19,13 @@ func templateNames() ([]string) {
     name := templateFile.Name()
     names = append(names, name[:len(name) - len(".html")])
   }
+  fmt.Printf("%s", names)
   return names
 }
 
 func apiRequest(originalRequest *http.Request) ([]byte) {
   apiURL := "http://localhost:9292"
-  var apiResponse http.Response
+  var apiResponse *http.Response
   if originalRequest.Method == "GET" {
     apiResponse, _ = http.Get(apiURL + originalRequest.URL.Path)
   }
@@ -40,23 +41,16 @@ func jsonResponse(originalRequest *http.Request) (interface{}) {
 }
 
 func templateHandler(writer http.ResponseWriter, request *http.Request) {
-  template := templateFilename(request.URL.Path)
+  // template := templateFilename(request.URL.Path)
+  template := templateFilename(request)
   jsonData := jsonResponse(request)
   page := mustache.RenderFile(template, jsonData)
-	fmt.Fprintf(writer, page)
-}
-
-func staticFileHandler(writer http.ResponseWriter, request *http.Request) {
-  fileName = "public" + requestURL + ".html"
 	fmt.Fprintf(writer, page)
 }
 
 func main() {
   for _, templateName := range templateNames() {
     http.HandleFunc("/" + templateName, templateHandler)
-  }
-  for _, fileName := range staticFileNames() {
-    http.HandleFunc("/" + fileName, staticFileHandler)
   }
   fmt.Printf("Starting server on port 8080\n")
 	http.ListenAndServe(":8080", nil)
