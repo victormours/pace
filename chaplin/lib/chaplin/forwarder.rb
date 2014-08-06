@@ -14,10 +14,10 @@ module Chaplin
       when 'GET'
         response = Net::HTTP.get(uri(request))
       when 'POST'
-        response = Net::HTTP.post_form(uri(request), request.params).body
+        response = Net::HTTP.post_form(uri(request), request.params)
       end
 
-      JSON.parse(response)
+      JSON.parse(response.body)
     end
 
     private

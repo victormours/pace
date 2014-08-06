@@ -16,7 +16,7 @@ module Chaplin
       page.template_file = TEMPLATES_PATH + template_name
 
       forwarder = Forwarder.new('localhost:8080')
-      api_data = @forwarder.forward(request)
+      api_data = @forwarder.forward(request, session)
 
       page.render(api_data)
     end

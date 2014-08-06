@@ -1,9 +1,4 @@
 require 'grape'
-require 'pace'
-
-require_relative 'authenticator'
-
-Pace::Config::Database.connect(YAML.load_file('database.yml'))
 
 module Pace
   class API < Grape::API
