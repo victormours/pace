@@ -1,5 +1,6 @@
 {
   "apiURL": "http://localhost:9292",
+  "layout": {"GET": {"/profile": "layout.html"}},
   "routes": [
     {"GET": {"/inbox": "inbox.html"}},
     {"GET": {"/outbox": "outbox.html"}},
