@@ -26,8 +26,20 @@ module Chaplin
       end
     end
 
+    def forward_layout_request(request)
+      uri = layout_uri(request)
+      api_request = Net::HTTP::Get.new(uri)
+      api_request['Cookie'] = request.env['HTTP_COOKIE']
+      Net::HTTP.start(uri.hostname, uri.port) do |http|
+        http.request(api_request)
+      end
+    end
+
     private
 
+    def layout_uri(request)
+      URI('http://' + @api_url + "/profile")
+    end
 
     def uri(request)
       URI('http://' + @api_url + request.path)

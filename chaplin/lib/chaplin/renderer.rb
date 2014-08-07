@@ -8,11 +8,11 @@ module Chaplin
       @templates_path = templates_path
     end
 
-    def render(json_data, template_name)
+    def render(json_data, template_name, layout_data)
       puts "rendering stuff"
       page = Mustache.new
       page.template_file = @templates_path + 'layout.html'
-      page_data = { content: render_page(json_data, template_name) }
+      page_data = layout_data.merge({ content: render_page(json_data, template_name) })
       page.render(page_data)
     end
 

@@ -14,7 +14,10 @@ module Chaplin
         api_response = @forwarder.forward(request)
         api_data = JSON.parse(api_response.body)
 
-        response_body = @renderer.render(api_data, template_name)
+        layout_response = @forwarder.forward_layout_request(request)
+        layout_data = JSON.parse(layout_response.body)
+
+        response_body = @renderer.render(api_data, template_name, layout_data)
 
         status = 200
         headers = rack_formatted_headers(api_response)

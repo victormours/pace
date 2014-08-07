@@ -1,7 +1,18 @@
 <!DOCTYPE html>
 <html>
   <body>
-    <h1><a href='/'>Pace</a><h1/>
+    <h1><a href='/'>Pace</a></h1>
+    {{#user}}
+      Logged in as {{email}}
+    {{/user}}
+    {{^user}}
+      Login:
+      <form action='login' method="post">
+        Email:
+        <input type="text" name="user_email"><br>
+        <input type="submit" value="Send">
+      </form>
+    {{/user}}
 
     {{{content}}}
   </body>
