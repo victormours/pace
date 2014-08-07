@@ -11,7 +11,8 @@ module Pace
       optional :page
     end
     get :inbox do
-      messages = Pace::ReceivedMessages.get(Authenticator.current_user_id, page: params[:page] || 0)
+      current_user_id = Authenticator.current_user_id(cookies)
+      messages = Pace::ReceivedMessages.get(current_user_id, page: params[:page] || 0)
       { messages: messages }
     end
 
@@ -21,7 +22,8 @@ module Pace
       optional :page
     end
     get :outbox do
-      messages = Pace::SentMessages.get(Authenticator.current_user_id, page: params[:page] || 0)
+      current_user_id = Authenticator.current_user_id(cookies)
+      messages = Pace::SentMessages.get(current_user_id, page: params[:page] || 0)
       { messages: messages }
     end
 
@@ -30,9 +32,10 @@ module Pace
       requires :body, type: String, desc: 'The content of the message'
     end
     post :message do
+      current_user_id = Authenticator.current_user_id(cookies)
       Pace::SendMessage.execute(
         body: params[:body],
-        sender_id: Authenticator.current_user_id,
+        sender_id: current_user_id,
         recipient_id: 2
       )
     end

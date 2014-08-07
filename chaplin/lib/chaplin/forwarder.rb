@@ -17,7 +17,7 @@ module Chaplin
         api_request = Net::HTTP::Get.new(uri)
       when 'POST'
         api_request = Net::HTTP::Post.new(uri)
-        request.set_form_data(request.params)
+        api_request.set_form_data(request.params)
       end
 
       api_request['Cookie'] = request.env['HTTP_COOKIE']
