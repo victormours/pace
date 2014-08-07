@@ -3,6 +3,7 @@
   "routes": [
     {"GET": {"/inbox": "inbox.html"}},
     {"GET": {"/outbox": "outbox.html"}},
+    {"GET": {"/profile": "profile.html"}},
     {"POST": {"/message": "message_sent.html"}},
     {"POST": {"/login": "logged_in.html"}}
   ]

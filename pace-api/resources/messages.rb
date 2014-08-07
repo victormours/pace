@@ -1,5 +1,6 @@
 require 'grape'
 
+require_relative '../authenticator'
 module Pace
   class API < Grape::API
     format :json

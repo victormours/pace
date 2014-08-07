@@ -9,18 +9,25 @@ module Chaplin
     end
 
     def forward(request)
-      response = ''
+      uri = uri(request)
+
+      api_request = nil
       case request.request_method
       when 'GET'
-        response = Net::HTTP.get(uri(request))
+        api_request = Net::HTTP::Get.new(uri)
       when 'POST'
-        response = Net::HTTP.post_form(uri(request), request.params).body
+        api_request = Net::HTTP::Post.new(uri)
+        request.set_form_data(request.params)
       end
 
-      JSON.parse(response)
+      api_request['Cookie'] = request.env['HTTP_COOKIE']
+      Net::HTTP.start(uri.hostname, uri.port) do |http|
+        http.request(api_request)
+      end
     end
 
     private
+
 
     def uri(request)
       URI('http://' + @api_url + request.path)

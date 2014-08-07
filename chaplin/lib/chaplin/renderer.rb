@@ -4,21 +4,14 @@ require_relative 'forwarder.rb'
 module Chaplin
   class Renderer
 
-    TEMPLATES_PATH = 'templates/'
-
-    def initialize(api_url)
-      @api_url = api_url
-      @forwarder = Forwarder.new(api_url)
+    def initialize(templates_path)
+      @templates_path = templates_path
     end
 
-    def render(request, template_name)
+    def render(json_data, template_name)
       page = Mustache.new
-      page.template_file = TEMPLATES_PATH + template_name
-
-      forwarder = Forwarder.new('localhost:8080')
-      api_data = @forwarder.forward(request)
-
-      page.render(api_data)
+      page.template_file = @templates_path + template_name
+      page.render(json_data)
     end
 
   end

@@ -1,5 +1,6 @@
 require 'grape'
 
+require_relative '../authenticator'
 module Pace
   class API < Grape::API
 
@@ -10,11 +11,16 @@ module Pace
     post :login do
       user = Pace::User.find_by_email(params[:user_email])
       if user
-        cookies[:user_email] = params[:user_email]
+        Authenticator.sign_in(user, cookies)
         { sucess: "You are now logged in" }
       else
         { error: "User not found" }
       end
+    end
+
+    desc 'The profile of the logged in user'
+    get :profile do
+      { user: Authenticator.current_user(cookies) }
     end
 
 

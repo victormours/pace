@@ -3,22 +3,36 @@ module Chaplin
 
     def initialize(api_url)
       @router = Router.new("routes.json")
-      @renderer = Renderer.new(api_url)
+      @renderer = Renderer.new('templates/')
+      @forwarder = Forwarder.new(api_url)
     end
 
     def call(rack_env)
       request = Rack::Request.new(rack_env)
       template_name = @router.template_for(request)
       if template_name
-        response_body = @renderer.render(request, template_name)
+        api_response = @forwarder.forward(request)
+        api_data = JSON.parse(api_response.body)
+
+        response_body = @renderer.render(api_data, template_name)
 
         status = 200
-        headers = {}
+        headers = rack_formatted_headers(api_response)
         body = [response_body]
 
         [status, headers, body]
       else
         [404, {}, ["Not found"]]
+      end
+    end
+
+    private
+
+    def rack_formatted_headers(response)
+      if response.header['set-cookie']
+        {'set-cookie' => response.header['set-cookie']}
+      else
+        {}
       end
     end
 
