@@ -18,6 +18,11 @@ module Pace
       end
     end
 
+    post :logout do
+      Authenticator.sign_out(cookies)
+      { success: "You logged out" }
+    end
+
     desc 'The profile of the logged in user'
     get :profile do
       { user: Authenticator.current_user(cookies) }

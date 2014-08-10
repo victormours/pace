@@ -11,6 +11,5 @@ end
 
 static_middleware = Rack::Static.new(chaplin_server,
                                      urls: static_urls,
-                                     index: 'index.html',
                                      root: 'public')
 Rack::Server.start(app: static_middleware, Port: 8081)
