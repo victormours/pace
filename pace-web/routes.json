@@ -2,7 +2,7 @@
   "apiURL": "http://localhost:9292",
   "layout": {"GET": {"/profile": "layout.html"}},
   "routes": [
-    {"GET": {"/": { "inbox.html", {"messages": {"GET", "/inbox"}} } }},
+    {"GET": {"/": "inbox.html"  }},
     {"GET": {"/inbox": "inbox.html"}},
     {"GET": {"/outbox": "outbox.html"}},
     {"GET": {"/profile": "profile.html"}},
