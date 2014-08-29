@@ -4,6 +4,7 @@ require_relative 'authenticator'
 module Pace
   class API
     class Users < Grape::API
+      format :json
 
       desc 'Puts the user email in the session if the user exists'
       params do
