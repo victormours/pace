@@ -1,5 +1,3 @@
 source 'https://rubygems.org'
 
-gem 'grape'
-gem 'pry'
-gem 'pace', '0.0.0', path: File.expand_path(File.dirname(__FILE__) + '/../pace-core')
+gemspec
