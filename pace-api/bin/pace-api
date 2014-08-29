@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+require "rack"
+require_relative '../lib/pace_api'
+
+Pace::Config::Database.connect(YAML.load_file('database.yml'))
+
+pace_api = Pace::API.new
+query_cache = ActiveRecord::QueryCache.new(pace_api)
+connection_management = ActiveRecord::ConnectionAdapters::ConnectionManagement.new(query_cache)
+Rack::Server.start(app: connection_management, Port: 8081)
+
