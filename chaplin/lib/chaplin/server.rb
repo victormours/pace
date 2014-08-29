@@ -27,7 +27,6 @@ module Chaplin
         [status, headers, body]
       else
         @file_server.call(rack_env)
-        [404, {}, ["Not found"]]
       end
     end
 
