@@ -10,7 +10,7 @@ Gem::Specification.new do |gem|
   gem.executables = ['pace-api']
 
   gem.add_runtime_dependency "rack"
-  gem.add_runtime_dependency 'pace', '0.0.0', path: File.expand_path(File.dirname(__FILE__) + '/../pace-core')
+  gem.add_runtime_dependency "grape"
 
   gem.add_development_dependency "rspec"
 end
