@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <body>
-    <h1><a href='/'>Pace</a></h1>
+    <h1><a href='/inbox'>Pace</a></h1>
     {{#user}}
       Logged in as {{email}}
       <form action='logout' method="post">
@@ -9,6 +9,9 @@
       </form>
 
       {{{content}}}
+
+      <a href='/new_message.html'>New message</a>
+      <a href='/about.html'>About</a>
     {{/user}}
 
     {{^user}}

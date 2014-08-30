@@ -5,6 +5,7 @@ module Chaplin
       @router = Router.new("routes.json")
       @renderer = Renderer.new('templates/')
       @forwarder = Forwarder.new(api_url)
+      @file_server = Rack::File.new('public')
     end
 
     def call(rack_env)
@@ -25,7 +26,7 @@ module Chaplin
 
         [status, headers, body]
       else
-        [404, {}, ["Not found"]]
+        @file_server.call(rack_env)
       end
     end
 
