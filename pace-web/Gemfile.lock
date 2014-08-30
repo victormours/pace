@@ -1,5 +1,6 @@
-PATH
-  remote: /Users/victormours/dev/pace/chaplin
+GIT
+  remote: git://github.com/victormours/chaplin.git
+  revision: 1dbc507164b0272ad74820e400ac17b16c78ac2d
   specs:
     chaplin (0.0.0)
       mustache
@@ -12,7 +13,7 @@ GEM
     coderay (1.1.0)
     method_source (0.8.2)
     mustache (0.99.6)
-    pry (0.10.0)
+    pry (0.10.1)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
@@ -23,4 +24,4 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  chaplin (= 0.0.0)!
+  chaplin!
