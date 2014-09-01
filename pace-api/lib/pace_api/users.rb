@@ -26,7 +26,7 @@ module Pace
 
       desc 'The profile of the logged in user'
       get :profile do
-        Authenticator.current_user(cookies)
+        Authenticator.current_user(cookies) || {}
       end
 
     end
