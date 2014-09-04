@@ -11,7 +11,8 @@ module Pace
         requires :user_email, type: String
       end
       post :login do
-        if Pace::User.find_by_email(params[:user_email])
+        user = Pace::User.find_by_email(params[:user_email])
+        if user
           Authenticator.sign_in(user, cookies)
           { sucess: "You are now logged in" }
         else
